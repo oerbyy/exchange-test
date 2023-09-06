@@ -1,10 +1,13 @@
 import React, {useEffect} from 'react';
-import logo from './logo.svg';
-import './App.css';
+// import logo from './logo.svg';
+// import './App.css';
+import {Container} from 'react-bootstrap';
 
 import {API_PRIVATBANK_CURRENCIES_PROXIED} from './app/constants';
 import {useAppDispatch} from './app/hooks';
 import {setRates} from './reducers/commonSlice';
+
+import CurrencyTable from './components/CurrencyTable';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -27,18 +30,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+        <Container
+          className="d-flex justify-content-center align-items-center"
+          style={{minHeight: '100vh'}}
         >
-          Learn React
-        </a>
+          <CurrencyTable />
+        </Container>
       </header>
     </div>
   );

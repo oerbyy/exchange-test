@@ -1,6 +1,6 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 
-interface CommonState {
+export interface CommonState {
   rates: CurrencyDTO[];
 }
 

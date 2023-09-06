@@ -1,6 +1,6 @@
 declare interface CurrencyDTO {
-  from: string;
-  to: string;
-  buyRate: number;
-  sellRate: number;
+  ccy: string;
+  base_ccy: string;
+  buy: number;
+  sale: number;
 }
