@@ -11,7 +11,7 @@ function CurrencyTable(): JSX.Element {
       const currencyLabel = `${el.base_ccy}/${el.ccy}`;
 
       return (
-        <tr>
+        <tr key={currencyLabel}>
           <td>{currencyLabel}</td>
           <td>{el.buy}</td>
           <td>{el.sale}</td>
