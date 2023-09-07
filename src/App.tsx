@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 // import logo from './logo.svg';
 // import './App.css';
 import {Container} from 'react-bootstrap';
@@ -7,24 +7,29 @@ import {API_PRIVATBANK_CURRENCIES_PROXIED} from './app/constants';
 import {useAppDispatch} from './app/hooks';
 import {setOriginalRates} from './reducers/commonSlice';
 
-import CurrencyTable from './components/CurrencyTable';
-import Converter from './components/Converter';
 import {isFakeServerError} from './helpers/commonHelper';
+import MainPage from './components/MainPage';
+import withErrorHandling from './hocs/withErrorHandling';
+import ErrorCard from './components/ErrorCard';
 
 function App() {
+  const [error, setError] = useState<Error>(Error());
+  console.log('App -> error', error.message);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (isFakeServerError()) throw Error('Server errpr occurred. Better luck next 4 times ;)');
+        if (isFakeServerError()) throw Error('Server error occurred. Better luck next 4 times ;)');
 
         const response = await fetch(API_PRIVATBANK_CURRENCIES_PROXIED);
         const json = await response.json();
         console.log(json);
         dispatch(setOriginalRates(json));
-      } catch (error) {
-        console.log('error', error);
+      } catch (e) {
+        const errMsg = e instanceof Error ? e.message : 'Unexpected error';
+
+        setError(Error(errMsg));
       }
     };
 
@@ -32,19 +37,12 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Container
-          className="d-flex justify-content-center align-items-center"
-          style={{minHeight: '100vh'}}
-        >
-          <CurrencyTable />
+  const MainPageWithErrorHandling = withErrorHandling(MainPage, ErrorCard);
 
-          <Converter />
-        </Container>
-      </header>
-    </div>
+  return (
+    <Container className="vh-100 d-flex align-items-center justify-content-center">
+      <MainPageWithErrorHandling error={error.message} />
+    </Container>
   );
 }
 
