@@ -2,28 +2,31 @@ import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface CommonState {
   rates: CurrencyDTO[];
+  ratesOriginal: CurrencyDTO[];
 }
 
 const initialState: CommonState = {
   rates: [],
+  ratesOriginal: [],
 };
 
 export const commonSlice = createSlice({
   name: 'counter',
   initialState,
   reducers: {
-    setRates: (state: CommonState, action: PayloadAction<CurrencyDTO[]>) => {
+    setOriginalRates: (state: CommonState, action: PayloadAction<CurrencyDTO[]>) => {
       state.rates = action.payload;
+      state.ratesOriginal = action.payload;
     },
   },
 });
 
-export const {setRates} = commonSlice.actions;
+export const {setOriginalRates} = commonSlice.actions;
 
 export default commonSlice.reducer;
 
 // Selectors
-const selectRates = (state: {counter: CommonState}) => state.counter.rates;
+const selectRates = (state: {counter: CommonState}) => state.counter.ratesOriginal;
 
 export const selectAvailableCurrencies = createSelector([selectRates], (rates) => {
   if (!rates || rates.length === 0) {

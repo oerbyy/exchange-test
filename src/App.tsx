@@ -5,9 +5,11 @@ import {Container} from 'react-bootstrap';
 
 import {API_PRIVATBANK_CURRENCIES_PROXIED} from './app/constants';
 import {useAppDispatch} from './app/hooks';
-import {setRates} from './reducers/commonSlice';
+import {setOriginalRates} from './reducers/commonSlice';
 
 import CurrencyTable from './components/CurrencyTable';
+import Converter from './components/Converter';
+import {isFakeServerError} from './helpers/commonHelper';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -15,17 +17,19 @@ function App() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response: any = await fetch(API_PRIVATBANK_CURRENCIES_PROXIED);
+        if (isFakeServerError()) throw Error('Server errpr occurred. Better luck next 4 times ;)');
+
+        const response = await fetch(API_PRIVATBANK_CURRENCIES_PROXIED);
         const json = await response.json();
         console.log(json);
-        dispatch(setRates(json));
+        dispatch(setOriginalRates(json));
       } catch (error) {
         console.log('error', error);
       }
     };
 
     fetchData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -36,6 +40,8 @@ function App() {
           style={{minHeight: '100vh'}}
         >
           <CurrencyTable />
+
+          <Converter />
         </Container>
       </header>
     </div>
