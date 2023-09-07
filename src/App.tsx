@@ -14,7 +14,6 @@ import ErrorCard from './components/ErrorCard';
 
 function App() {
   const [error, setError] = useState<Error>(Error());
-  console.log('App -> error', error.message);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -24,7 +23,6 @@ function App() {
 
         const response = await fetch(API_PRIVATBANK_CURRENCIES_PROXIED);
         const json = await response.json();
-        console.log(json);
         dispatch(setOriginalRates(json));
       } catch (e) {
         const errMsg = e instanceof Error ? e.message : 'Unexpected error';
@@ -40,7 +38,7 @@ function App() {
   const MainPageWithErrorHandling = withErrorHandling(MainPage, ErrorCard);
 
   return (
-    <Container className="vh-100 d-flex align-items-center justify-content-center">
+    <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
       <MainPageWithErrorHandling error={error.message} />
     </Container>
   );
