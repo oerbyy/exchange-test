@@ -9,6 +9,9 @@ import {ExchangeType} from '../app/enums';
 
 function Converter(): JSX.Element {
   const currencies: string[] = useSelector(selectAvailableCurrencies);
+  const sellCurrency: string = useAppSelector((state) => state.counter.sellCurrency);
+  const buyCurrency: string = useAppSelector((state) => state.counter.buyCurrency);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -22,8 +25,14 @@ function Converter(): JSX.Element {
   const onChangeSell = (e: ChangeEvent<HTMLSelectElement>) => {
     dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Sell}));
   };
+
   const onChangeBuy = (e: ChangeEvent<HTMLSelectElement>) => {
     dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Buy}));
+  };
+
+  const onSwapCurrencies = () => {
+    dispatch(updateCurrency({currency: sellCurrency, exchangeType: ExchangeType.Buy}));
+    dispatch(updateCurrency({currency: buyCurrency, exchangeType: ExchangeType.Sell}));
   };
 
   return (
@@ -37,18 +46,22 @@ function Converter(): JSX.Element {
 
         <Col xs={4}>
           <Form.Label>Sell:</Form.Label>
-          <Form.Select onChange={onChangeSell} aria-label="Sell currency">
+          <Form.Select onChange={onChangeSell} value={sellCurrency} aria-label="Sell currency">
             {currencies.map((el) => (
-              <option value={el}>{el}</option>
+              <option value={el} key={el}>
+                {el}
+              </option>
             ))}
           </Form.Select>
         </Col>
+
         <Col xs={4}>
-          <Button variant="primary">
+          <Button onClick={onSwapCurrencies} variant="primary">
             <span>&#8592;</span>
             <span>&#8594;</span>
           </Button>
         </Col>
+
         <Col xs={4}>
           <FloatingLabel controlId="change" label="Change" className="mb-3 w-100">
             <Form.Control type="number" placeholder="Change" />
@@ -57,9 +70,11 @@ function Converter(): JSX.Element {
 
         <Col xs={4}>
           <Form.Label>Buy:</Form.Label>
-          <Form.Select onChange={onChangeBuy} aria-label="Buy currency">
+          <Form.Select onChange={onChangeBuy} value={buyCurrency} aria-label="Buy currency">
             {currencies.map((el) => (
-              <option value={el}>{el}</option>
+              <option value={el} key={el}>
+                {el}
+              </option>
             ))}
           </Form.Select>
         </Col>
