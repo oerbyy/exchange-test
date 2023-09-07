@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from 'react';
 // import logo from './logo.svg';
-// import './App.css';
 import {Container} from 'react-bootstrap';
 
 import {API_PRIVATBANK_CURRENCIES_PROXIED} from './app/constants';
