@@ -1,13 +1,19 @@
+// import {ExchangeCurrencyDTO, CurrencyDTO} from '../typings/Dto';
+import {ExchangeType} from './../app/enums';
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
 export interface CommonState {
   rates: CurrencyDTO[];
   ratesOriginal: CurrencyDTO[];
+  sellCurrency: string;
+  buyCurrency: string;
 }
 
 const initialState: CommonState = {
   rates: [],
   ratesOriginal: [],
+  sellCurrency: '',
+  buyCurrency: '',
 };
 
 export const commonSlice = createSlice({
@@ -17,6 +23,12 @@ export const commonSlice = createSlice({
     setOriginalRates: (state: CommonState, action: PayloadAction<CurrencyDTO[]>) => {
       state.rates = action.payload;
       state.ratesOriginal = action.payload;
+    },
+
+    updateCurrency: (state: CommonState, action: PayloadAction<ExchangeCurrencyDTO>) => {
+      const {currency, exchangeType} = action.payload;
+      if (exchangeType === ExchangeType.Sell) state.sellCurrency = currency;
+      if (exchangeType === ExchangeType.Buy) state.buyCurrency = currency;
     },
   },
 });

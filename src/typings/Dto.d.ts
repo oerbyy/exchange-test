@@ -4,3 +4,8 @@ declare interface CurrencyDTO {
   buy: number;
   sale: number;
 }
+
+declare interface ExchangeCurrencyDTO {
+  currency: string;
+  exchangeType: ExchangeType;
+}
