@@ -33,7 +33,7 @@ export const commonSlice = createSlice({
   },
 });
 
-export const {setOriginalRates} = commonSlice.actions;
+export const {setOriginalRates, updateCurrency} = commonSlice.actions;
 
 export default commonSlice.reducer;
 

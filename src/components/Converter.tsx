@@ -1,16 +1,30 @@
-import React from 'react';
+import React, {useEffect, ChangeEvent, FormEvent} from 'react';
 
 import {Col, FloatingLabel, Row, Form, Button, Container} from 'react-bootstrap';
 import {useSelector} from 'react-redux';
 
-import {useAppSelector} from '../app/hooks';
-import {selectAvailableCurrencies} from '../reducers/commonSlice';
+import {useAppSelector, useAppDispatch} from '../app/hooks';
+import {selectAvailableCurrencies, updateCurrency} from '../reducers/commonSlice';
+import {ExchangeType} from '../app/enums';
 
 function Converter(): JSX.Element {
-  const currencies = useSelector(selectAvailableCurrencies);
-  console.log('currencies', currencies);
+  const currencies: string[] = useSelector(selectAvailableCurrencies);
+  const dispatch = useAppDispatch();
 
-  if (!currencies) return <></>;
+  useEffect(() => {
+    dispatch(updateCurrency({currency: currencies[0], exchangeType: ExchangeType.Sell}));
+    dispatch(updateCurrency({currency: currencies[0], exchangeType: ExchangeType.Buy}));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  if (!currencies) return <>No currencies available</>;
+
+  const onChangeSell = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Sell}));
+  };
+  const onChangeBuy = (e: ChangeEvent<HTMLSelectElement>) => {
+    dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Buy}));
+  };
 
   return (
     <Container>
@@ -22,11 +36,11 @@ function Converter(): JSX.Element {
         </Col>
 
         <Col xs={4}>
-          <Form.Select aria-label="Default select example">
-            <option>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <Form.Label>Sell:</Form.Label>
+          <Form.Select onChange={onChangeSell} aria-label="Sell currency">
+            {currencies.map((el) => (
+              <option value={el}>{el}</option>
+            ))}
           </Form.Select>
         </Col>
         <Col xs={4}>
@@ -42,11 +56,11 @@ function Converter(): JSX.Element {
         </Col>
 
         <Col xs={4}>
-          <Form.Select aria-label="Default select example">
-            <option>Open this select menu</option>
-            <option value="1">One</option>
-            <option value="2">Two</option>
-            <option value="3">Three</option>
+          <Form.Label>Buy:</Form.Label>
+          <Form.Select onChange={onChangeBuy} aria-label="Buy currency">
+            {currencies.map((el) => (
+              <option value={el}>{el}</option>
+            ))}
           </Form.Select>
         </Col>
       </Row>
