@@ -7,6 +7,8 @@ export interface CommonState {
   ratesOriginal: CurrencyDTO[];
   sellCurrency: string;
   buyCurrency: string;
+  sellAmount: number;
+  buyAmount: number;
 }
 
 const initialState: CommonState = {
@@ -14,6 +16,8 @@ const initialState: CommonState = {
   ratesOriginal: [],
   sellCurrency: '',
   buyCurrency: '',
+  sellAmount: 0,
+  buyAmount: 0,
 };
 
 export const commonSlice = createSlice({
@@ -30,10 +34,19 @@ export const commonSlice = createSlice({
       if (exchangeType === ExchangeType.Sell) state.sellCurrency = currency;
       if (exchangeType === ExchangeType.Buy) state.buyCurrency = currency;
     },
+
+    updateAmount: (
+      state: CommonState,
+      action: PayloadAction<{sellAmount: number; buyAmount: number}>
+    ) => {
+      const {sellAmount, buyAmount} = action.payload;
+      state.sellAmount = sellAmount;
+      state.buyAmount = buyAmount;
+    },
   },
 });
 
-export const {setOriginalRates, updateCurrency} = commonSlice.actions;
+export const {setOriginalRates, updateCurrency, updateAmount} = commonSlice.actions;
 
 export default commonSlice.reducer;
 
