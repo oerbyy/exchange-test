@@ -67,3 +67,31 @@ export const selectAvailableCurrencies = createSelector([selectRates], (rates) =
 
   return Array.from(currencies);
 });
+
+export const selectSelToBuyRates = createSelector([selectRates], (rates) => {
+  console.log('rates', rates);
+  if (!rates || rates.length === 0) {
+    return {};
+  }
+
+  let res = {};
+  rates.forEach((el) => {
+    const id = `${el.base_ccy}/${el.ccy}`;
+    const idReverted = `${el.ccy}/${el.base_ccy}`;
+
+    res = {
+      ...res,
+      [id]: {
+        ...el,
+      },
+      [idReverted]: {
+        buy: 1 / Number(el.sale),
+        sale: 1 / Number(el.buy),
+        base_ccy: el.ccy,
+        ccy: el.base_ccy,
+      },
+    };
+  });
+
+  return res;
+});
