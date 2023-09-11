@@ -4,11 +4,21 @@ import {Col, FloatingLabel, Row, Form, Button, Container} from 'react-bootstrap'
 import {useSelector} from 'react-redux';
 
 import {useAppSelector, useAppDispatch} from '../app/hooks';
-import {selectAvailableCurrencies, updateCurrency, updateAmount} from '../reducers/commonSlice';
+import {
+  selectAvailableCurrencies,
+  updateCurrency,
+  updateAmount,
+  selectSellToBuyRates,
+  selectConvertAvailability,
+} from '../reducers/commonSlice';
 import {ExchangeType} from '../app/enums';
 
 function Converter(): JSX.Element {
-  const currencies: string[] = useSelector(selectAvailableCurrencies);
+  const allCurrencies: string[] = useSelector(selectAvailableCurrencies);
+  const sellToBuyRates = useSelector(selectSellToBuyRates);
+  console.log('sellToBuyRates', sellToBuyRates);
+  const convertAvailability = useSelector(selectConvertAvailability);
+  console.log('convertAvailability', convertAvailability);
 
   const sellCurrency: string = useAppSelector((state) => state.counter.sellCurrency);
   const buyCurrency: string = useAppSelector((state) => state.counter.buyCurrency);
@@ -18,14 +28,21 @@ function Converter(): JSX.Element {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (currencies.length > 0) {
-      dispatch(updateCurrency({currency: currencies[0], exchangeType: ExchangeType.Sell}));
-      dispatch(updateCurrency({currency: currencies[0], exchangeType: ExchangeType.Buy}));
+    if (allCurrencies.length > 0 && Object.keys(convertAvailability).length > 0) {
+      const defaultSellCurrency = allCurrencies[0];
+      dispatch(updateCurrency({currency: defaultSellCurrency, exchangeType: ExchangeType.Sell}));
+      dispatch(
+        updateCurrency({
+          currency: convertAvailability[defaultSellCurrency][0],
+          exchangeType: ExchangeType.Buy,
+        })
+      );
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currencies]);
+  }, [allCurrencies]);
 
-  if (!currencies) return <>No currencies available</>;
+  if (!allCurrencies || allCurrencies.length < 2)
+    return <>Sorry, not enough currencies for exchange</>;
 
   const onChangeSellCurrency = (e: ChangeEvent<HTMLSelectElement>) => {
     dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Sell}));
@@ -56,6 +73,8 @@ function Converter(): JSX.Element {
     }
   };
 
+  const buyCurrencies = convertAvailability[sellCurrency] || [];
+
   return (
     <Container>
       <Row className="align-items-center">
@@ -77,7 +96,7 @@ function Converter(): JSX.Element {
             value={sellCurrency}
             aria-label="Sell currency"
           >
-            {currencies.map((el) => (
+            {allCurrencies.map((el) => (
               <option value={el} key={el}>
                 {el}
               </option>
@@ -106,7 +125,7 @@ function Converter(): JSX.Element {
         <Col xs={4}>
           <Form.Label>Buy:</Form.Label>
           <Form.Select onChange={onChangeBuyCurrency} value={buyCurrency} aria-label="Buy currency">
-            {currencies.map((el) => (
+            {buyCurrencies.map((el) => (
               <option value={el} key={el}>
                 {el}
               </option>

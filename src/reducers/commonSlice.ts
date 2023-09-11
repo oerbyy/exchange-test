@@ -68,13 +68,12 @@ export const selectAvailableCurrencies = createSelector([selectRates], (rates) =
   return Array.from(currencies);
 });
 
-export const selectSelToBuyRates = createSelector([selectRates], (rates) => {
-  console.log('rates', rates);
+export const selectSellToBuyRates = createSelector([selectRates], (rates) => {
   if (!rates || rates.length === 0) {
     return {};
   }
 
-  let res = {};
+  let res: SellToBuyRatesDTO = {};
   rates.forEach((el) => {
     const id = `${el.base_ccy}/${el.ccy}`;
     const idReverted = `${el.ccy}/${el.base_ccy}`;
@@ -95,3 +94,24 @@ export const selectSelToBuyRates = createSelector([selectRates], (rates) => {
 
   return res;
 });
+
+export const selectConvertAvailability = createSelector(
+  [selectSellToBuyRates],
+  (rates: SellToBuyRatesDTO) => {
+    if (!rates || Object.keys(rates).length === 0) {
+      return {};
+    }
+
+    let res: ConvertAvailabilityDTO = {};
+
+    Object.keys(rates).forEach((el) => {
+      const [from, to] = el.split('/');
+
+      if (!res[from]) res[from] = [];
+
+      res[from].push(to);
+    });
+
+    return res;
+  }
+);
