@@ -78,19 +78,19 @@ function Converter(): JSX.Element {
   };
 
   const onChangeSellAmount = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
+    const buyValue = Number(e.target.value);
+    const rate: CurrencyDTO = sellToBuyRates[`${sellCurrency}/${buyCurrency}`];
+    const sellValue = buyValue / rate.sale;
 
-    if (sellCurrency === buyCurrency) {
-      dispatch(updateAmount({sellAmount: value, buyAmount: value}));
-    }
+    dispatch(updateAmount({sellAmount: buyValue, buyAmount: sellValue}));
   };
 
   const onChangeBuyAmount = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = Number(e.target.value);
+    const sellValue = Number(e.target.value);
+    const rate: CurrencyDTO = sellToBuyRates[`${sellCurrency}/${buyCurrency}`];
+    const buyValue = sellValue * rate.sale;
 
-    if (sellCurrency === buyCurrency) {
-      dispatch(updateAmount({sellAmount: value, buyAmount: value}));
-    }
+    dispatch(updateAmount({sellAmount: buyValue, buyAmount: sellValue}));
   };
 
   const buyCurrencies = convertAvailability[sellCurrency] || [];
