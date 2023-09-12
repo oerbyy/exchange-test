@@ -35,6 +35,12 @@ export const commonSlice = createSlice({
       if (exchangeType === ExchangeType.Buy) state.buyCurrency = currency;
     },
 
+    swapCurrencies: (state: CommonState, action: PayloadAction<{sellCurrency: string, buyCurrency: string}>) => {
+      const {sellCurrency, buyCurrency} = action.payload;
+      state.sellCurrency = buyCurrency;
+      state.buyCurrency = sellCurrency;
+    },
+
     updateAmount: (
       state: CommonState,
       action: PayloadAction<{sellAmount: number; buyAmount: number}>
@@ -46,7 +52,7 @@ export const commonSlice = createSlice({
   },
 });
 
-export const {setOriginalRates, updateCurrency, updateAmount} = commonSlice.actions;
+export const {setOriginalRates, updateCurrency, swapCurrencies, updateAmount} = commonSlice.actions;
 
 export default commonSlice.reducer;
 
@@ -74,6 +80,7 @@ export const selectSellToBuyRates = createSelector([selectRates], (rates) => {
   }
 
   let res: SellToBuyRatesDTO = {};
+
   rates.forEach((el) => {
     const id = `${el.base_ccy}/${el.ccy}`;
     const idReverted = `${el.ccy}/${el.base_ccy}`;

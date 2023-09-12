@@ -7,6 +7,7 @@ import {useAppSelector, useAppDispatch} from '../app/hooks';
 import {
   selectAvailableCurrencies,
   updateCurrency,
+  swapCurrencies,
   updateAmount,
   selectSellToBuyRates,
   selectConvertAvailability,
@@ -45,16 +46,35 @@ function Converter(): JSX.Element {
     return <>Sorry, not enough currencies for exchange</>;
 
   const onChangeSellCurrency = (e: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Sell}));
+    const newSellCurrency = e.target.value;
+    dispatch(updateCurrency({currency: newSellCurrency, exchangeType: ExchangeType.Sell}));
+
+    if (!convertAvailability[newSellCurrency].includes(buyCurrency)) {
+      dispatch(
+        updateCurrency({
+          currency: convertAvailability[newSellCurrency][0],
+          exchangeType: ExchangeType.Buy,
+        })
+      );
+    }
   };
 
   const onChangeBuyCurrency = (e: ChangeEvent<HTMLSelectElement>) => {
-    dispatch(updateCurrency({currency: e.target.value, exchangeType: ExchangeType.Buy}));
+    const newBuyCurrency = e.target.value;
+    dispatch(updateCurrency({currency: newBuyCurrency, exchangeType: ExchangeType.Buy}));
+
+    if (!convertAvailability[newBuyCurrency].includes(sellCurrency)) {
+      dispatch(
+        updateCurrency({
+          currency: convertAvailability[newBuyCurrency][0],
+          exchangeType: ExchangeType.Sell,
+        })
+      );
+    }
   };
 
   const onSwapCurrencies = () => {
-    dispatch(updateCurrency({currency: sellCurrency, exchangeType: ExchangeType.Buy}));
-    dispatch(updateCurrency({currency: buyCurrency, exchangeType: ExchangeType.Sell}));
+    dispatch(swapCurrencies({sellCurrency, buyCurrency}));
   };
 
   const onChangeSellAmount = (e: ChangeEvent<HTMLInputElement>) => {
