@@ -104,6 +104,7 @@ function Converter(): JSX.Element {
               onChange={onChangeSellAmount}
               value={sellAmount}
               type="number"
+              min={0}
               placeholder="Change"
             />
           </FloatingLabel>
@@ -137,6 +138,7 @@ function Converter(): JSX.Element {
               onChange={onChangeBuyAmount}
               value={buyAmount}
               type="number"
+              min={0}
               placeholder="Get"
             />
           </FloatingLabel>
