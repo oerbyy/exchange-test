@@ -60,15 +60,38 @@ export const commonSlice = createSlice({
       state.sellAmount = sellAmount;
       state.buyAmount = buyAmount;
     },
+
+    updateRate: (
+      state: CommonState,
+      action: PayloadAction<{exchangeType: ExchangeType; rateLabel: string; rateValue: number}>
+    ) => {
+      const {exchangeType, rateLabel, rateValue} = action.payload;
+      const [base_ccy, ccy] = rateLabel.split('/');
+
+      const updatedRates = state.rates.map((rate) => {
+        const updatedRate = {...rate};
+
+        if (rate.base_ccy === base_ccy && rate.ccy === ccy) {
+          if (exchangeType === ExchangeType.Buy) updatedRate.buy = rateValue;
+          if (exchangeType === ExchangeType.Sell) updatedRate.sale = rateValue;
+        }
+
+        return updatedRate;
+      });
+
+      console.log('updatedRates', updatedRates);
+      state.rates = updatedRates;
+    },
   },
 });
 
-export const {setOriginalRates, updateCurrency, swapCurrencies, updateAmount} = commonSlice.actions;
+export const {setOriginalRates, updateCurrency, swapCurrencies, updateAmount, updateRate} =
+  commonSlice.actions;
 
 export default commonSlice.reducer;
 
 // Selectors
-const selectRates = (state: {counter: CommonState}) => state.counter.ratesOriginal;
+const selectRates = (state: {counter: CommonState}) => state.counter.rates;
 
 export const selectAvailableCurrencies = createSelector([selectRates], (rates) => {
   if (!rates || rates.length === 0) {
