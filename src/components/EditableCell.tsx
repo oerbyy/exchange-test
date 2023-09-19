@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {useAppDispatch} from '../app/hooks';
 
@@ -17,7 +17,13 @@ function EditableCell({exchangeType, rateValue, rateLabel}: EditableCellProps) {
   const [isEditButtonShown, setIsEditButtonShown] = useState(false);
   const [editedValue, setEditedValue] = useState('');
 
+  const inputRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isEditing) inputRef.current.focus();
+  }, [isEditing]);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -33,41 +39,46 @@ function EditableCell({exchangeType, rateValue, rateLabel}: EditableCellProps) {
     setIsEditing(false);
   };
 
+  const onKeyPress = (e: any) => {
+    if (e.key === 'Enter' || e.key === 'NumpadEnter') handleSaveClick();
+    if (e.key === 'Escape') handleCancelClick();
+  };
+
   return (
     <div className="editable-text" onMouseLeave={() => setIsEditButtonShown(false)}>
-      {isEditing ? (
-        <div>
-          <input
-            type="number"
-            min={0}
-            value={editedValue}
-            onChange={(e) => setEditedValue(e.target.value)}
-          />
-          <button className="save-button" onClick={handleSaveClick}>
-            <span role="img" aria-label="Save">
-              ✔️
-            </span>
-          </button>
-          <button className="cancel-button" onClick={handleCancelClick}>
-            <span role="img" aria-label="Cancel">
-              ❌
-            </span>
-          </button>
+      <div hidden={!isEditing}>
+        <input
+          type="number"
+          min={0}
+          value={editedValue}
+          onChange={(e) => setEditedValue(e.target.value)}
+          ref={inputRef}
+          onKeyUp={onKeyPress}
+        />
+        <button className="save-button" onClick={handleSaveClick}>
+          <span role="img" aria-label="Save">
+            ✔️
+          </span>
+        </button>
+        <button className="cancel-button" onClick={handleCancelClick}>
+          <span role="img" aria-label="Cancel">
+            ❌
+          </span>
+        </button>
+      </div>
+
+      <div hidden={isEditing}>
+        <div className="text-container" onMouseEnter={() => setIsEditButtonShown(true)}>
+          {rateValue}
         </div>
-      ) : (
-        <div>
-          <div className="text-container" onMouseEnter={() => setIsEditButtonShown(true)}>
-            {rateValue}
+        {isEditButtonShown && (
+          <div className="edit-icon-container">
+            <button className="edit-icon" onClick={handleEditClick}>
+              ✎
+            </button>
           </div>
-          {isEditButtonShown && (
-            <div className="edit-icon-container">
-              <button className="edit-icon" onClick={handleEditClick}>
-                ✎
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
