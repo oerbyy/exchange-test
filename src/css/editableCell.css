@@ -1,0 +1,38 @@
+/* Updated CSS for EditableText component */
+
+/* Save Button */
+.save-button {
+  position: relative; /* Change to relative */
+  float: right; /* Align to the right */
+  width: 30px;
+  height: 30px;
+  background-color: #4caf50; /* Green color */
+  border: none;
+  border-radius: 50%; /* Makes it a circle */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Cancel Button */
+.cancel-button {
+  position: relative; /* Change to relative */
+  float: right; /* Align to the right */
+  width: 30px;
+  height: 30px;
+  background-color: #f44336; /* Red color */
+  border: none;
+  border-radius: 50%; /* Makes it a circle */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Edit Icon Container */
+.edit-icon-container {
+  position: relative;
+  top: 5px;
+  right: 5px;
+}
