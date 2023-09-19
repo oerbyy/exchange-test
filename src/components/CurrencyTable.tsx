@@ -5,6 +5,8 @@ import {useAppSelector} from '../app/hooks';
 import EditableCell from './EditableCell';
 import {ExchangeType} from '../app/enums';
 
+import '../css/currencyTable.css';
+
 function CurrencyTable(): JSX.Element {
   const rates: CurrencyDTO[] = useAppSelector((state) => state.counter.rates);
 
@@ -38,7 +40,7 @@ function CurrencyTable(): JSX.Element {
   }
 
   return (
-    <Table className="table" bordered striped style={{maxWidth: '400px'}}>
+    <Table className="table currency-table" bordered striped style={{maxWidth: '400px'}}>
       <thead>
         <tr>
           <th scope="col">Currency</th>
