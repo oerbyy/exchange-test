@@ -15,6 +15,10 @@
   justify-content: center;
 }
 
+.save-button[disabled] {
+  background-color: lightgray;
+}
+
 /* Cancel Button */
 .cancel-button {
   position: relative; /* Change to relative */

@@ -7,3 +7,5 @@ export const API_PRIVATBANK_CURRENCIES_PROXIED = `https://api.allorigins.win/raw
 )}`;
 
 export const FAKE_ERROR_PERIOD = 5;
+
+export const RATE_PERCENT_LIMIT = 10;
