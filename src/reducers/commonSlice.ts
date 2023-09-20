@@ -46,10 +46,6 @@ export const commonSlice = createSlice({
       const {sellCurrency, buyCurrency} = action.payload;
       state.sellCurrency = buyCurrency;
       state.buyCurrency = sellCurrency;
-
-      // TODO: add recalculations on amounts instead of reset
-      state.buyAmount = 0;
-      state.sellAmount = 0;
     },
 
     updateAmount: (
@@ -79,7 +75,6 @@ export const commonSlice = createSlice({
         return updatedRate;
       });
 
-      console.log('updatedRates', updatedRates);
       state.rates = updatedRates;
     },
   },

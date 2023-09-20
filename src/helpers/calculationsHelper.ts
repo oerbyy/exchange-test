@@ -3,3 +3,11 @@ export function getPercentDifference(a: number, b: number): number {
 
   return percDiff;
 }
+
+export function getBuyAmount(sellAmount: number, sellRate: number): number {
+  return sellAmount / sellRate;
+}
+
+export function getSellAmount(buyAmount: number, sellRate: number): number {
+  return buyAmount * sellRate;
+}

@@ -13,6 +13,7 @@ import {
   selectConvertAvailability,
 } from '../reducers/commonSlice';
 import {ExchangeType} from '../app/enums';
+import {getBuyAmount, getSellAmount} from '../helpers/calculationsHelper';
 
 function Converter(): JSX.Element {
   const allCurrencies: string[] = useSelector(selectAvailableCurrencies);
@@ -25,6 +26,7 @@ function Converter(): JSX.Element {
   const buyCurrency: string = useAppSelector((state) => state.counter.buyCurrency);
   const sellAmount: number = useAppSelector((state) => state.counter.sellAmount);
   const buyAmount: number = useAppSelector((state) => state.counter.buyAmount);
+  const currentRate: CurrencyDTO = sellToBuyRates[`${sellCurrency}/${buyCurrency}`];
 
   const dispatch = useAppDispatch();
 
@@ -74,23 +76,26 @@ function Converter(): JSX.Element {
   };
 
   const onSwapCurrencies = () => {
+    const newSellAmount = buyAmount;
+    const newSellRate = currentRate.buy;
+    const newBuyAmount = getSellAmount(newSellAmount, newSellRate);
+
     dispatch(swapCurrencies({sellCurrency, buyCurrency}));
+    dispatch(updateAmount({sellAmount: newSellAmount, buyAmount: newBuyAmount}));
   };
 
   const onChangeSellAmount = (e: ChangeEvent<HTMLInputElement>) => {
-    const buyValue = Number(e.target.value);
-    const rate: CurrencyDTO = sellToBuyRates[`${sellCurrency}/${buyCurrency}`];
-    const sellValue = buyValue / rate.sale;
+    const sellAmount = Number(e.target.value);
+    const buyAmount = getBuyAmount(sellAmount, currentRate.sale);
 
-    dispatch(updateAmount({sellAmount: buyValue, buyAmount: sellValue}));
+    dispatch(updateAmount({sellAmount, buyAmount}));
   };
 
   const onChangeBuyAmount = (e: ChangeEvent<HTMLInputElement>) => {
-    const sellValue = Number(e.target.value);
-    const rate: CurrencyDTO = sellToBuyRates[`${sellCurrency}/${buyCurrency}`];
-    const buyValue = sellValue * rate.sale;
+    const buyAmount = Number(e.target.value);
+    const sellAmount = getSellAmount(buyAmount, currentRate.sale);
 
-    dispatch(updateAmount({sellAmount: buyValue, buyAmount: sellValue}));
+    dispatch(updateAmount({sellAmount, buyAmount}));
   };
 
   const buyCurrencies = convertAvailability[sellCurrency] || [];
