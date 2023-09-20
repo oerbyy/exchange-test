@@ -96,13 +96,13 @@ function EditableCell({exchangeType, rateValue, rateLabel}: EditableCellProps) {
         <div className="text-container" onMouseEnter={() => setIsEditButtonShown(true)}>
           {rateValue}
         </div>
-        {isEditButtonShown && (
-          <div className="edit-icon-container">
-            <button className="edit-icon" onClick={handleEditClick}>
-              ✎
-            </button>
-          </div>
-        )}
+
+        {/* 'hidden' is used instead of conditional rendering for purpose of persisting in DOM for testing reasons */}
+        <div hidden={!isEditButtonShown} className="edit-icon-container">
+          <button className="edit-icon" onClick={handleEditClick}>
+            ✎
+          </button>
+        </div>
       </div>
     </div>
   );
