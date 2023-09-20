@@ -1,4 +1,3 @@
-// import {ExchangeCurrencyDTO, CurrencyDTO} from '../typings/Dto';
 import {ExchangeType} from './../app/enums';
 import {createSelector, createSlice, PayloadAction} from '@reduxjs/toolkit';
 
@@ -33,10 +32,6 @@ export const commonSlice = createSlice({
       const {currency, exchangeType} = action.payload;
       if (exchangeType === ExchangeType.Sell) state.sellCurrency = currency;
       if (exchangeType === ExchangeType.Buy) state.buyCurrency = currency;
-
-      // TODO: add recalculations on amounts instead of reset
-      state.buyAmount = 0;
-      state.sellAmount = 0;
     },
 
     swapCurrencies: (

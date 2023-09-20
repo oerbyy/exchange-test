@@ -33,6 +33,7 @@ function Converter(): JSX.Element {
   useEffect(() => {
     if (allCurrencies.length > 0 && Object.keys(convertAvailability).length > 0) {
       const defaultSellCurrency = allCurrencies[0];
+
       dispatch(updateCurrency({currency: defaultSellCurrency, exchangeType: ExchangeType.Sell}));
       dispatch(
         updateCurrency({
@@ -43,6 +44,17 @@ function Converter(): JSX.Element {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allCurrencies]);
+
+  useEffect(() => {
+    if (currentRate) {
+      const newBuyAmount = getBuyAmount(sellAmount, currentRate.sale);
+
+      if (newBuyAmount !== buyAmount) {
+        dispatch(updateAmount({sellAmount, buyAmount: newBuyAmount}));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [buyCurrency, sellCurrency]);
 
   if (!allCurrencies || allCurrencies.length < 2)
     return <>Sorry, not enough currencies for exchange</>;
