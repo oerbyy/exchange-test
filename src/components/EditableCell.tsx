@@ -5,26 +5,9 @@ import {useAppDispatch, useAppSelector} from '../app/hooks';
 import '../css/editableCell.css';
 import {updateRate} from '../reducers/commonSlice';
 import {ExchangeType} from '../app/enums';
-import {getPercentDifference} from '../helpers/calculationsHelper';
-import {RATE_PERCENT_LIMIT} from '../app/constants';
+import { isRateWithinLimits } from '../helpers/calculationsHelper';
 
-function isRateWithinLimits(
-  {exchangeType, rateValue, rateLabel}: EditableCellProps,
-  ratesOriginal: CurrencyDTO[]
-): boolean {
-  const [base_ccy, ccy] = rateLabel.split('/');
-  const originalRate = ratesOriginal.find((rate) => rate.base_ccy === base_ccy && rate.ccy === ccy);
-
-  if (!originalRate) return false;
-
-  const rateOriginalValue =
-    exchangeType === ExchangeType.Buy ? originalRate.buy : originalRate.sale;
-  const difference = getPercentDifference(rateOriginalValue, rateValue);
-
-  return difference <= RATE_PERCENT_LIMIT;
-}
-
-interface EditableCellProps {
+export interface EditableCellProps {
   exchangeType: ExchangeType;
   rateLabel: string;
   rateValue: number;

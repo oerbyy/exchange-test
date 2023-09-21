@@ -8,6 +8,35 @@ import {initialState} from '../../tests/initialState'; // example of working Ini
 import {updateRate} from '../reducers/commonSlice.ts';
 import EditableCell from './EditableCell';
 import {ExchangeType} from '../app/enums';
+import {isRateWithinLimits} from '../helpers/calculationsHelper';
+
+// test validation functions
+
+describe('testing isRateWithinLimits()', () => {
+  it('tests when rateValue is within and out of limits for Buy exchange', () => {
+    const rateValueValid = 43; // Adjust as needed
+    const rateValueInvalid = 45; // Adjust as needed
+
+    const rateLabel = 'EUR/UAH';
+    const exchangeType = ExchangeType.Buy;
+    const ratesOriginal = [
+      {base_ccy: 'EUR', ccy: 'UAH', buy: 40, sale: 43},
+      // Add other rates as needed
+    ];
+
+    const resultValid = isRateWithinLimits(
+      {exchangeType, rateValue: rateValueValid, rateLabel},
+      ratesOriginal
+    );
+    expect(resultValid).toBe(true);
+
+    const resultInvalid = isRateWithinLimits(
+      {exchangeType, rateValue: rateValueInvalid, rateLabel},
+      ratesOriginal
+    );
+    expect(resultInvalid).toBe(false);
+  });
+});
 
 // Create a mock Redux store
 const mockStore = configureMockStore();
