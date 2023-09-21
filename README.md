@@ -1,4 +1,4 @@
-# Test task for IN****
+# React Exchange Converter test task
 
 ## Requirements:
 
@@ -30,11 +30,10 @@ https://drive.google.com/file/d/1JkF_n03lIO4T6WDcfRG5nUZL38b15U3o/view?u
 sp=sharing
 
 ● Create currency converter: two input fields and appropriate dropdown with
-currencies(USD, EUR, UAH, BTC), calculate button, currency for calculations -
+currencies(USD, EUR, UAH, BTC), currency for calculations -
 get actual (can be changed in the table) value from cell with currency
 Example - in the mockups
-(https://drive.google.com/file/d/1c23I1p57iTinRdsLrWleEHYSxb43Cq95/view?usp
-=sharing two dropdowns with currencies). Values in the input can be swapped
+(https://drive.google.com/file/d/1c23I1p57iTinRdsLrWleEHYSxb43Cq95/view?usp=sharing two dropdowns with currencies). Values in the input can be swapped
 (please see arrow, functionality the same as in google translate for example).
 
 ● On page reloading - wipe out editabled data, fetch fresh currency rates from api

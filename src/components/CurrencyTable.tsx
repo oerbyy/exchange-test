@@ -14,7 +14,6 @@ function CurrencyTable(): JSX.Element {
     return rates.map((el) => {
       const currencyLabel = `${el.base_ccy}/${el.ccy}`;
 
-      console.log('getCurrencyRows -> currencyLabel', currencyLabel);
       return (
         <tr key={currencyLabel}>
           <td>{currencyLabel}</td>

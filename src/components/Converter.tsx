@@ -1,4 +1,4 @@
-import React, {useEffect, ChangeEvent, FormEvent} from 'react';
+import React, {useEffect, ChangeEvent} from 'react';
 
 import {Col, FloatingLabel, Row, Form, Button, Container} from 'react-bootstrap';
 import {useSelector} from 'react-redux';
@@ -18,9 +18,7 @@ import {getBuyAmount, getSellAmount} from '../helpers/calculationsHelper';
 function Converter(): JSX.Element {
   const allCurrencies: string[] = useSelector(selectAvailableCurrencies);
   const sellToBuyRates = useSelector(selectSellToBuyRates);
-  console.log('sellToBuyRates', sellToBuyRates);
   const convertAvailability = useSelector(selectConvertAvailability);
-  console.log('convertAvailability', convertAvailability);
 
   const sellCurrency: string = useAppSelector((state) => state.counter.sellCurrency);
   const buyCurrency: string = useAppSelector((state) => state.counter.buyCurrency);
