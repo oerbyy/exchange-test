@@ -36,7 +36,7 @@ function App() {
   const MainPageWithErrorHandling = withErrorHandling(MainPage, ErrorCard);
 
   return (
-    <div className="d-flex flex-column min-vh-100">
+    <div className="d-flex flex-column min-vh-100" style={{minWidth: 300}}>
       <header
         className="d-flex justify-content-center align-items-center bg-gradient bg-warning text-white"
         style={{height: '100px'}}
