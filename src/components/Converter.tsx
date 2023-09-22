@@ -111,9 +111,9 @@ function Converter(): JSX.Element {
   const buyCurrencies = convertAvailability[sellCurrency] || [];
 
   return (
-    <Container>
+    <Container className="w-100">
       <Row className="align-items-center">
-        <Col xs={4}>
+        <Col xs={2} className="flex-grow-1" style={{paddingTop: 29}}>
           <FloatingLabel controlId="change" label="Change" className="mb-3 w-100">
             <Form.Control
               onChange={onChangeSellAmount}
@@ -125,7 +125,7 @@ function Converter(): JSX.Element {
           </FloatingLabel>
         </Col>
 
-        <Col xs={4}>
+        <Col xs={2}>
           <Form.Label>Sell:</Form.Label>
           <Form.Select
             onChange={onChangeSellCurrency}
@@ -140,14 +140,14 @@ function Converter(): JSX.Element {
           </Form.Select>
         </Col>
 
-        <Col xs={4}>
+        <Col>
           <Button onClick={onSwapCurrencies} variant="primary">
             <span>&#8592;</span>
             <span>&#8594;</span>
           </Button>
         </Col>
 
-        <Col xs={4}>
+        <Col xs={2} className="flex-grow-1" style={{paddingTop: 29}}>
           <FloatingLabel controlId="change" label="Get" className="mb-3 w-100">
             <Form.Control
               onChange={onChangeBuyAmount}
@@ -159,7 +159,7 @@ function Converter(): JSX.Element {
           </FloatingLabel>
         </Col>
 
-        <Col xs={4}>
+        <Col xs={2}>
           <Form.Label>Buy:</Form.Label>
           <Form.Select onChange={onChangeBuyCurrency} value={buyCurrency} aria-label="Buy currency">
             {buyCurrencies.map((el) => (

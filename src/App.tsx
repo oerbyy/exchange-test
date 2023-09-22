@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from 'react';
-// import logo from './logo.svg';
 import {Container} from 'react-bootstrap';
 
 import {API_PRIVATBANK_CURRENCIES_PROXIED} from './app/constants';
@@ -37,9 +36,25 @@ function App() {
   const MainPageWithErrorHandling = withErrorHandling(MainPage, ErrorCard);
 
   return (
-    <Container fluid className="vh-100 d-flex align-items-center justify-content-center">
-      <MainPageWithErrorHandling error={error.message} />
-    </Container>
+    <div className="d-flex flex-column min-vh-100">
+      <header
+        className="bg-light d-flex justify-content-center align-items-center"
+        style={{height: '100px'}}
+      >
+        <h1 className="display-4">Oerbyy's Exchange Calculator</h1>
+      </header>
+
+      <Container className="d-flex flex-column flex-grow-1 justify-content-center align-items-center mt-4">
+        <MainPageWithErrorHandling error={error.message} />
+      </Container>
+
+      <footer
+        className="bg-light d-flex justify-content-center align-items-center"
+        style={{height: '100px'}}
+      >
+        <small className="text-muted">Volodymyr Shchukin, copyright 2023 (c)</small>
+      </footer>
+    </div>
   );
 }
 
