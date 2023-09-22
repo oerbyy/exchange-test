@@ -1,23 +1,29 @@
 # React Exchange Converter test task
 
+Please see deployed application here: 
+https://453m86-3000.csb.app/
+
 ## Features (by developer):
 
 ● Fetching from real API
+
 ● Responsive layout
+
 ● Decomposition and code structure close to bigger projects
+
 ● Utilize of HOC pattern for error page
-● Utilize of memoized selectors for calculations of derived state 
+
+● Utilize of memoized selectors for calculations of derived state
+
 ● Unit tests for both components and validating functions
 
-## Installation: 
+## Installation:
 
-Please checkout code from the Github repo: 
+Please checkout code from the Github repo:
 https://github.com/oerbyy/exchange-test
 
-<code>
-npm i <br>
-npm start
-</code>
+<code>npm i <br>
+npm start</code>
 
 ## Requirements (by client):
 
