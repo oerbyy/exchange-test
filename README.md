@@ -1,6 +1,25 @@
 # React Exchange Converter test task
 
-## Requirements:
+## Features (by developer):
+
+● Fetching from real API
+● Responsive layout
+● Decomposition and code structure close to bigger projects
+● Utilize of HOC pattern for error page
+● Utilize of memoized selectors for calculations of derived state 
+● Unit tests for both components and validating functions
+
+## Installation: 
+
+Please checkout code from the Github repo: 
+https://github.com/oerbyy/exchange-test
+
+<code>
+npm i <br>
+npm start
+</code>
+
+## Requirements (by client):
 
 ● Creat-react-app - as starter template
 
@@ -44,7 +63,7 @@ values in the editable cells.
 ● Height of layout application - full screen height, without vertical scroll header,
 footer - 100px height, all another vertical space - content.
 
-## Technology stack:
+## Technology stack (by client):
 
 ● React - required
 
@@ -54,7 +73,7 @@ footer - 100px height, all another vertical space - content.
 
 ● Unit tests - jest, karma, mocha, react-testing-library
 
-## Nice to have:
+## Nice to have (by client):
 
 ● Fancy UI (any framework - bootstrap, material ui, etc )
 
@@ -71,7 +90,7 @@ inputs)
 
 ● Typescript
 
-## Prohibited:
+## Prohibited (by client):
 
 ● Take ready-to-use npm packages or libs, that will provide functionality of currency
 converter or editable tables. List of available packages - react, redux, effector,
