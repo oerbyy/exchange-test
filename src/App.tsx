@@ -38,7 +38,7 @@ function App() {
   return (
     <div className="d-flex flex-column min-vh-100">
       <header
-        className="bg-light d-flex justify-content-center align-items-center"
+        className="d-flex justify-content-center align-items-center bg-gradient bg-warning text-white"
         style={{height: '100px'}}
       >
         <h1 className="display-4">Oerbyy's Exchange Calculator</h1>
