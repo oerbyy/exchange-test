@@ -2,17 +2,18 @@
 
 /* Save Button */
 .save-button {
-  position: relative; /* Change to relative */
-  float: right; /* Align to the right */
+  position: relative;
+  float: right;
   width: 30px;
   height: 30px;
-  background-color: #4caf50; /* Green color */
+  background-color: #4caf50;
   border: none;
-  border-radius: 50%; /* Makes it a circle */
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease-in-out;
 }
 
 .save-button[disabled] {
@@ -21,17 +22,18 @@
 
 /* Cancel Button */
 .cancel-button {
-  position: relative; /* Change to relative */
-  float: right; /* Align to the right */
+  position: relative;
+  float: right;
   width: 30px;
   height: 30px;
-  background-color: #f44336; /* Red color */
+  background-color: #f44336;
   border: none;
-  border-radius: 50%; /* Makes it a circle */
+  border-radius: 50%;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background-color 0.3s ease-in-out;
 }
 
 /* Edit Icon Container */
@@ -40,4 +42,12 @@
   top: 5px;
   right: 5px;
   line-height: 25px;
+  border-radius: 50%; /* Make it rounded */
+  border: none; /* Remove the border */
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Hover effect for edit-icon-container */
+.edit-icon-container:hover {
+  transform: scale(1.2);
 }

@@ -81,8 +81,8 @@ function EditableCell({exchangeType, rateValue, rateLabel}: EditableCellProps) {
         </div>
 
         {/* 'hidden' is used instead of conditional rendering for purpose of persisting in DOM for testing reasons */}
-        <div hidden={!isEditButtonShown} className="edit-icon-container">
-          <button className="edit-icon" onClick={handleEditClick}>
+        <div hidden={!isEditButtonShown} >
+          <button className="edit-icon-container" onClick={handleEditClick}>
             ✎
           </button>
         </div>
