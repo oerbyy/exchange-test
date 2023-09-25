@@ -22,16 +22,12 @@ export function isRateWithinLimits(
 ): boolean {
   const [base_ccy, ccy] = rateLabel.split('/');
   const originalRate = ratesOriginal.find((rate) => rate.base_ccy === base_ccy && rate.ccy === ccy);
-  console.log('originalRate', originalRate);
 
   if (!originalRate) return false;
 
   const rateOriginalValue =
     exchangeType === ExchangeType.Buy ? originalRate.buy : originalRate.sale;
-
-  const difference = getPercentDifference(rateOriginalValue, rateValue);
-  console.log("rateOriginalValue, rateValue", rateOriginalValue, rateValue)
-  console.log('difference', difference);
+  const difference = getPercentDifference(Number(rateOriginalValue), Number(rateValue));
 
   return difference <= RATE_PERCENT_LIMIT;
 }
